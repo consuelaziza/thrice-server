@@ -30,7 +30,7 @@ app.use(session({
     maxAge: 1000 * 24* 60 * 60 // your cookie will be cleared after these seconds
   },
   store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI || "mongodb://localhost/ReactTodos",
+    mongoUrl: process.env.MONGODB_URI || "mongodb://localhost/thrice",
     // Time to Live for sessions in DB. After that time it will delete it!
     ttl: 24* 60 * 60 // your session will be cleared after these seconds
   })
@@ -44,6 +44,9 @@ app.use(session({
 // Contrary to the views version, all routes are controlled from the routes/index.js
 const allRoutes = require("./routes");
 app.use("/api", allRoutes);
+
+const todoRoutes = require('./routes/todo.routes');
+app.use('/api', todoRoutes);
 
 const authRoutes = require('./routes/auth.routes');
 app.use('/api', authRoutes);
