@@ -15,12 +15,15 @@ let UserSchema = new Schema({
     type: String,
     maxlength: 50
     },
+    history: {
+      type: Array,
+      default: []
+  },
     
     image: String,
 })
 
-// 2. Define your model
-let UserModel = model('user', UserSchema)
 
-// 3. Export your Model with 'module.exports'
+const UserModel = model('user', UserSchema)
+
 module.exports = UserModel

@@ -1,21 +1,19 @@
 const express = require('express')
 const router = express.Router()
-
-//we installed bcrypt.js
 const bcrypt = require('bcryptjs');
 
 const UserModel = require('../models/User.Model');
 
 router.post('/signup', (req, res) => {
-    const {name, email, password, lastname, image } = req.body;
-    console.log(name, email, password, lastname, image );
+    const {name, email, password } = req.body;
+    console.log(name, email, password);
  
     // -----SERVER SIDE VALIDATION ----------
     
-    if (!name || !email || !password || !lastname) {
+    if (!name || !email || !password ) {
         res.status(500)
           .json({
-            errorMessage: 'Please enter username, email and password'
+            errorMessage: 'Please enter first and lastname, email, and password'
           });
         return;  
     }
@@ -36,10 +34,10 @@ router.post('/signup', (req, res) => {
     
 
      
-    // creating a salt 
+    // creating salt 
     let salt = bcrypt.genSaltSync(10);
     let hash = bcrypt.hashSync(password, salt);
-    UserModel.create({name: username, email, passwordHash: hash})
+    UserModel.create({name: name, email, passwordHash: hash})
       .then((user) => {
         // ensuring that we don't share the hash as well with the user
         user.passwordHash = "***";
@@ -48,7 +46,7 @@ router.post('/signup', (req, res) => {
       .catch((err) => {
         if (err.code === 11000) {
           res.status(500).json({
-            errorMessage: 'username or email entered already exists!',
+            errorMessage: 'name or email entered already exists!',
             message: err,
           });
         } 
@@ -64,7 +62,7 @@ router.post('/signup', (req, res) => {
 // will handle all POST requests to http:localhost:5005/api/signin
 router.post('/signin', (req, res) => {
     const {email, password } = req.body;
-
+  console.log(email, password)
     // -----SERVER SIDE VALIDATION ----------
     
     if ( !email || !password) {
@@ -134,6 +132,8 @@ const isLoggedIn = (req, res, next) => {
       })
   };
 };
+
+
 
 
 //Protected Routes
