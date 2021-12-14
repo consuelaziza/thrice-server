@@ -40,6 +40,9 @@ app.use(session({
 //      EXPRESS-SESSION CONFIG
 // ---------------------------------------------------
 
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
+
 // 👇 Start handling routes here
 // Contrary to the views version, all routes are controlled from the routes/index.js
 const allRoutes = require("./routes");
@@ -50,6 +53,11 @@ app.use('/api', productRoutes);
 
 const authRoutes = require('./routes/auth.routes');
 app.use('/api', authRoutes);
+
+app.use((req, res, next) => {
+
+ res.sendFile(__dirname + '/public/index.html');
+});
 
 
 
