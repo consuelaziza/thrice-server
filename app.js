@@ -54,6 +54,12 @@ app.use('/api', productRoutes);
 const authRoutes = require('./routes/auth.routes');
 app.use('/api', authRoutes);
 
+const fileUploadRoutes = require('./routes/file-upload.routes')
+app.use("/api", fileUploadRoutes);
+
+const stripeRoutes = require('./routes/stripe.routes')
+app.use('/api', stripeRoutes)
+
 app.use((req, res, next) => {
 
  res.sendFile(__dirname + '/public/index.html');
