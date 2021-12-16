@@ -19,14 +19,12 @@ let UserSchema = new Schema({
       type: Array,
       default: []
   },
-    history: {
-      type: Array,
-      default: []
+  history: {
+    type: Array,
+    default: []
   },
-    
-    image: String,
+  image: String,
 })
-
 
 const UserModel = model('user', UserSchema)
 
